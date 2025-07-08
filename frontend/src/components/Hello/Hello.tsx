@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 
+const apiPort = import.meta.env.VITE_API_PORT;
+const baseUrl = `http://localhost:${apiPort}/api`;
+
 export function Hello() {
   const [laravelText, setLaravelText] = useState(null);
 
   useEffect(() => {
     const fetchLaravelText = async () => {
       try {
-        const response = await fetch("http://localhost:8888/api/hello");
+        const response = await fetch(`${baseUrl}/hello`);
         const data = await response.json();
 
         setLaravelText(data.message);

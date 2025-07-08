@@ -10,6 +10,8 @@ services:
     build: 
       context: .
       dockerfile: ./docker/frontend/Dockerfile
+      args:
+        VITE_API_PORT: ${WEB_SERVER_PORT}
     container_name: ${PROJECT_NAME}_react-webserver
     working_dir: /app
     ports:

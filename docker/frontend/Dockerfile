@@ -5,6 +5,9 @@ WORKDIR /app
 COPY /frontend/package*.json ./
 RUN npm install
 
+ARG VITE_API_PORT
+ENV VITE_API_PORT=${VITE_API_PORT}
+
 COPY /frontend .
 RUN npm run build
 
