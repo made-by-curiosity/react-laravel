@@ -1,5 +1,8 @@
 # 🐳 Docker Compose Commands
 
+fresh-build:
+	docker compose build --no-cache
+
 up:
 	docker compose up -d
 
@@ -38,15 +41,24 @@ composer:
 composer-install:
 	docker compose run --rm composer install
 
+# Fresh start
 
-# fresh start
-
-init: prepare-env composer-install generate-key migrate
+init: prepare-env fresh-build
 
 prepare-env:
-	@if [ ! -f ./application/.env ]; then \
-		cp ./application/.env.example ./application/.env && \
+	@if [ ! -f .env ]; then \
+		cp .env.example .env && \
 		echo ".env created"; \
 	else \
 		echo ".env already exists"; \
+	fi
+
+laravel-init: prepare-laravel-env composer-install generate-key migrate
+
+prepare-laravel-env:
+	@if [ ! -f ./application/.env ]; then \
+		cp ./application/.env.example ./application/.env && \
+		echo "laravel .env created"; \
+	else \
+		echo "laravel .env already exists"; \
 	fi
