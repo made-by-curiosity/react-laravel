@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const apiPort = import.meta.env.VITE_API_PORT;
+const apiPort = import.meta.env.VITE_API_PORT || 8888;
 const baseUrl = `http://localhost:${apiPort}/api`;
 
 export function Hello() {
