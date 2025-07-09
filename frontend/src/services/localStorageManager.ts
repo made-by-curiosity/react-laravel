@@ -13,7 +13,12 @@ const getToken = (): string => {
   return authSavedInfo?.token;
 };
 
+const eraseUserInfo = () => {
+  storage.remove(LOCAL_STORAGE_AUTH_KEY);
+};
+
 export const localStorageManager = {
   saveToken,
   getToken,
+  eraseUserInfo
 };

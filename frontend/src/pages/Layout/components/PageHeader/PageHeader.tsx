@@ -1,6 +1,6 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { routes } from "../../../../config/routes";
-import { useState } from "react";
+import { useUser } from "../../../../context/UserContext";
 
 export const publicMenuItems = [
   {
@@ -34,11 +34,16 @@ export const privateMenuItems = [
 
 
 export const PageHeader = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const { user, logout } = useUser();
+  const navigate = useNavigate();
+
+
+  const isLoggedIn = !!user;
   const navLinks = isLoggedIn ? privateMenuItems : publicMenuItems;
 
-  const toggleLogin = () => {
-    setIsLoggedIn((isLoggedIn) => !isLoggedIn);
+  const handleLogout = () => {
+    logout();
+    navigate(routes.auth.login);
   }
 
   return (
@@ -60,9 +65,11 @@ export const PageHeader = () => {
           ))}
         </ul>
       </nav>
-      <div>
-        <button onClick={toggleLogin}>{isLoggedIn ? 'Log out' : 'Log in'}</button>
-      </div>
+      {isLoggedIn && (
+        <button onClick={handleLogout}>
+          Logout
+        </button>
+      )}
     </div>
   );
 };

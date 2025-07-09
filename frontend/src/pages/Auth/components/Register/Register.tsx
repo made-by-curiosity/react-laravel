@@ -6,6 +6,7 @@ import { validationSchema } from "./validationSchema";
 import { registerUser } from "../../../../api/userRegister";
 import { localStorageManager } from "../../../../services/localStorageManager";
 import { routes } from "../../../../config/routes";
+import { useUser } from "../../../../context/UserContext";
 
 const Register = () => {
   const formik = useFormik({
@@ -26,6 +27,9 @@ const Register = () => {
         });
 
         localStorageManager.saveToken(response);
+        setUser({
+          email: values.email,
+        });
 
         formik.resetForm();
         toast.success("Registration successful!");
@@ -39,6 +43,7 @@ const Register = () => {
 
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const { setUser } = useUser();
 
   return (
     <div>

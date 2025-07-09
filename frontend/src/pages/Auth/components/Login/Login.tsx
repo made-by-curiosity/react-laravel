@@ -1,11 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import { validationSchema } from "./validationSchema";
 import { logInUser } from "../../../../api/userLogIn";
 import { localStorageManager } from "../../../../services/localStorageManager";
-import { useNavigate } from "react-router-dom";
 import { routes } from "../../../../config/routes";
+import { useUser } from "../../../../context/UserContext";
 
 const Login = () => {
   const formik = useFormik({
@@ -25,6 +26,9 @@ const Login = () => {
         });
 
         localStorageManager.saveToken(response);
+        setUser({
+          email: values.email,
+        });
 
         formik.resetForm();
         toast.success("Login successful!");
@@ -38,6 +42,7 @@ const Login = () => {
 
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const { setUser } = useUser();
 
 
   return (
@@ -73,7 +78,7 @@ const Login = () => {
           </label>
           {formik.touched.password && formik.errors.password ? <div>{formik.errors.password}</div> : null}
         </div>
-        <button type="submit">Register</button>
+        <button type="submit">Login</button>
       </form>
     </div>
   );
