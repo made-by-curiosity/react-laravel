@@ -1,9 +1,11 @@
-import { useFormik } from "formik";
-import { registerUser } from "../../../../api/userRegister";
-import { validationSchema } from "./validationSchema";
-import { toast } from "react-toastify";
-import { localStorageManager } from "../../../../services/localStorageManager";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import { toast } from "react-toastify";
+import { validationSchema } from "./validationSchema";
+import { registerUser } from "../../../../api/userRegister";
+import { localStorageManager } from "../../../../services/localStorageManager";
+import { routes } from "../../../../config/routes";
 
 const Register = () => {
   const formik = useFormik({
@@ -27,6 +29,7 @@ const Register = () => {
 
         formik.resetForm();
         toast.success("Registration successful!");
+        navigate(routes.posts)
       } catch (error: any) {
         setError(error.response.data.message);
         toast.error(error.response.data.message);
@@ -35,6 +38,7 @@ const Register = () => {
   });
 
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   return (
     <div>

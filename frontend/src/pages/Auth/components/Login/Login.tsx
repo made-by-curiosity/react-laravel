@@ -4,6 +4,8 @@ import { useFormik } from "formik";
 import { validationSchema } from "./validationSchema";
 import { logInUser } from "../../../../api/userLogIn";
 import { localStorageManager } from "../../../../services/localStorageManager";
+import { useNavigate } from "react-router-dom";
+import { routes } from "../../../../config/routes";
 
 const Login = () => {
   const formik = useFormik({
@@ -26,6 +28,7 @@ const Login = () => {
 
         formik.resetForm();
         toast.success("Login successful!");
+        navigate(routes.posts)
       } catch (error: any) {
         setError(error.response.data.message);
         toast.error(error.response.data.message);
@@ -34,6 +37,8 @@ const Login = () => {
   });
 
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
+
 
   return (
     <div>
