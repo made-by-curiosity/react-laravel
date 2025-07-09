@@ -7,6 +7,7 @@ import type { IPostModel } from "../../api/types";
 import { validationSchema } from "./validationSchema";
 import { createPost } from "../../api/createPost";
 import { routes } from "../../config/routes";
+import { deletePost } from "../../api/deletePost";
 
 const PostsPage = () => {
   const formik = useFormik({
@@ -55,6 +56,18 @@ const PostsPage = () => {
     })()
   }, []);
 
+  const handlePostDelete = (postId: number) => {
+    return async () => {
+      try {
+        await deletePost(postId);
+        setPosts((prevPosts) => prevPosts?.filter((post) => post.id !== postId) || null);
+        toast.success("Post has been successfuly deleted!");
+      } catch (error: any) {
+        toast.error(error.response.data.message);
+      }
+    };
+  }
+
   return (
     <div>
       <div>
@@ -93,12 +106,13 @@ const PostsPage = () => {
       {!posts && 'Loading...'}
       <ul>
         {posts && posts.map((post) => (
-          <li key={post.id}>
+          <li key={post.id} style={{ display: "flex", gap: "10px", alignItems: "center" }}>
             <Link to={`${routes.posts}/${post.id}`}>
               <h2>
                 {post.title}
               </h2>
             </Link>
+            <button type="button" onClick={handlePostDelete(post.id)}>Remove</button>
           </li>
         ))}
         {posts?.length === 0 && <p>No posts available.</p>}
