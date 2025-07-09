@@ -3,8 +3,8 @@ import * as yup from "yup";
 export const validationSchema = yup.object({
   title: yup
     .string()
-    .required("Enter your Full Name"),
+    .required("Enter a title"),
   content: yup
     .string()
-    .required("Enter a password")
+    .required("Enter a content"),
 });
