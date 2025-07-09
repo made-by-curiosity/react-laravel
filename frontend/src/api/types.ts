@@ -25,3 +25,7 @@ export interface IPostModel {
 export interface IPostsResponse {
     posts: IPostModel[]
 }
+
+export interface IPostResponse {
+    post: IPostModel
+}
