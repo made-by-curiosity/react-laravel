@@ -17,6 +17,7 @@ const DashboardPage = lazy(() => import("../Dashboard/DashboardPage"));
 const ProfilePage = lazy(() => import("../Profile/ProfilePage"));
 const SettingsPage = lazy(() => import("../Settings/SettingsPage"));
 const PostsPage = lazy(() => import("../Posts/PostsPage"));
+const Post = lazy(() => import("../Posts/components/Post"));
 
 export const RootPage = () => {
   return (
@@ -39,7 +40,9 @@ export const RootPage = () => {
             <Route path={routes.dashboard} element={<DashboardPage />} />
             <Route path={routes.profile} element={<ProfilePage />} />
             <Route path={routes.settings} element={<SettingsPage />} />
-            <Route path={routes.posts} element={<PostsPage />} />
+            <Route path={routes.posts} element={<PostsPage />} >
+              <Route path={":id"} element={<Post />} />
+            </Route>
             <Route path={"*"} element={<Navigate to={routes.home} replace={true} />} />
           </Route>
         </Routes>

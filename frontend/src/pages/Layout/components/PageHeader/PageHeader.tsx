@@ -37,7 +37,6 @@ export const PageHeader = () => {
   const { user, logout } = useUser();
   const navigate = useNavigate();
 
-
   const isLoggedIn = !!user;
   const navLinks = isLoggedIn ? privateMenuItems : publicMenuItems;
 

@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { Link, Outlet } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { useFormik } from "formik";
 import { getPosts } from "../../api/getPosts";
 import type { IPostModel } from "../../api/types";
 import { validationSchema } from "./validationSchema";
 import { createPost } from "../../api/createPost";
+import { routes } from "../../config/routes";
 
 const PostsPage = () => {
   const formik = useFormik({
@@ -88,15 +90,22 @@ const PostsPage = () => {
           <button type="submit">Add new post</button>
         </form>
       </div>
+      {!posts && 'Loading...'}
       <ul>
-        {!posts && 'Loading...'}
         {posts && posts.map((post) => (
           <li key={post.id}>
-            <h2>{post.title}</h2>
+            <Link to={`${routes.posts}/${post.id}`}>
+              <h2>
+                {post.title}
+              </h2>
+            </Link>
           </li>
         ))}
         {posts?.length === 0 && <p>No posts available.</p>}
       </ul>
+      <div>
+        <Outlet />
+      </div>
     </div>
   );
 };
